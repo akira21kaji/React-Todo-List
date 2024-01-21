@@ -7,7 +7,7 @@ function Filter({ value, onChange }) {
   };
 
   return (
-    <div className="panle-tabs">
+    <div className="panel-tabs">
       <a
         href="#"
         onClick={handleClick.bind(null, "ALL")}

@@ -32,11 +32,17 @@ function Todo() {
     setItems(newItems);
   };
 
+  const orderAsc = () => {};
+
   return (
     <div className="panel">
       <div className="panel-heading">React TODO</div>
       <Input onAdd={handleAdd} />
       <Filter onChange={handleFilterChange} value={filter} />
+      <div className="panel-block">
+        <button onClick={orderAsc}>昇順</button>
+        {/* <button onClick={orderDesc}>降順</button> */}
+      </div>
       {displayItems.map((item) => (
         <TodoItem key={item.text} item={item} onCheck={handleCheck} />
       ))}
