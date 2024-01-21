@@ -1,16 +1,10 @@
-// import type User from "./Types/User";
+import type User from "./Types/User";
 import { useState } from "react";
 import TodoItem from "./TodoItem";
 import Input from "./Input";
 import Filter from "./Filter";
 
 const getKey = () => Math.random().toString(32).substring(2);
-
-type User = {
-  key: String;
-  text: String;
-  done: Boolean;
-};
 
 function Todo() {
   const [items, setItems] = useState<User[]>([]);

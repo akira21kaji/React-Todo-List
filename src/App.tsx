@@ -1,5 +1,4 @@
 import Todo from "./Todo";
-import { User } from "./Types/User";
 
 function App() {
   return (

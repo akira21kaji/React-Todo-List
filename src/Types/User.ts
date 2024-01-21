@@ -1,7 +1,7 @@
 type User = {
-  key: String;
-  text: String;
-  done: Boolean;
+  key: string;
+  text: string;
+  done: boolean;
 };
 
 export default User;
