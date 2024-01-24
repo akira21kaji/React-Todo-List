@@ -10,7 +10,7 @@ function Todo() {
   const [items, setItems] = useState<User[]>([]);
   const [filter, setFilter] = useState("ALL");
   const [isOrder, setIsOrder] = useState({ sortColum: "none", isAsc: true });
-  const [checked, setChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleAdd = (text) => {
     setItems([
@@ -22,7 +22,9 @@ function Todo() {
   const handleFilterChange = (value) => setFilter(value);
 
   const displayItems = items.filter((item) => {
-    if (filter === "ALL") return true;
+    if (filter === "ALL") {
+      return isChecked ? !item.done : true;
+    }
     if (filter === "TODO") return !item.done;
     if (filter === "DONE") return item.done;
   });
@@ -40,7 +42,7 @@ function Todo() {
   const prepareItems = () => {
     if (isOrder.sortColum === "none") {
       return displayItems;
-    } else if (isOrder.sortColum === "apphabet") {
+    } else if (isOrder.sortColum === "alphabet") {
       return displayItems.sort((a, b) => {
         return isOrder.isAsc
           ? a.text.localeCompare(b.text)
@@ -66,7 +68,7 @@ function Todo() {
   const onClickSortByCreationNone = () =>
     setIsOrder({ sortColum: "creation", isAsc: false });
 
-  const handleChecked = () => setChecked(!checked);
+  const handleChecked = () => setIsChecked(!isChecked);
 
   return (
     <div className="panel">
