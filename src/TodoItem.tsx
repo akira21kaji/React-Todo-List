@@ -10,7 +10,7 @@ function TodoItem({ item, onCheck }) {
       <input type="checkbox" checked={item.done} onChange={handleChange} />
       <span
         className={classNames({
-          "has-text-grey-light": item.done,
+          "has-text-grey-light ": item.done,
         })}
       >
         {item.text}

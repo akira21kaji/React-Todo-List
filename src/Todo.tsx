@@ -9,11 +9,14 @@ const getKey = () => Math.random().toString(32).substring(2);
 function Todo() {
   const [items, setItems] = useState<User[]>([]);
   const [filter, setFilter] = useState("ALL");
-  const [isOrder, setIsOrder] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [isOrder, setIsOrder] = useState({ sortColum: "none", isAsc: true });
+  const [checked, setChecked] = useState(false);
 
   const handleAdd = (text) => {
-    setItems([...items, { key: getKey(), text, done: false }]);
+    setItems([
+      ...items,
+      { key: getKey(), text, done: false, createdAt: Date.now() },
+    ]);
   };
 
   const handleFilterChange = (value) => setFilter(value);
@@ -35,21 +38,35 @@ function Todo() {
   };
 
   const prepareItems = () => {
-    if (isOrder === "") {
+    if (isOrder.sortColum === "none") {
       return displayItems;
+    } else if (isOrder.sortColum === "apphabet") {
+      return displayItems.sort((a, b) => {
+        return isOrder.isAsc
+          ? a.text.localeCompare(b.text)
+          : b.text.localeCompare(a.text);
+      });
+    } else {
+      return displayItems.sort((x, y) => {
+        return isOrder.isAsc
+          ? x.createdAt - y.createdAt
+          : y.createdAt - x.createdAt;
+      });
     }
-    return displayItems.sort((a, b) => {
-      return isOrder === "asc"
-        ? a.text.localeCompare(b.text)
-        : b.text.localeCompare(a.text);
-    });
   };
 
   const sortedItems = prepareItems();
 
-  const isAsc = () => setIsOrder("asc");
-  const isDesc = () => setIsOrder("desc");
-  const isReset = () => setIsOrder("");
+  const onClickSortByAlphabet = () =>
+    setIsOrder({ sortColum: "alphabet", isAsc: true });
+  const onClickSortByAlphabetNone = () =>
+    setIsOrder({ sortColum: "alphabet", isAsc: false });
+  const onClickSortByCreation = () =>
+    setIsOrder({ sortColum: "creation", isAsc: true });
+  const onClickSortByCreationNone = () =>
+    setIsOrder({ sortColum: "creation", isAsc: false });
+
+  const handleChecked = () => setChecked(!checked);
 
   return (
     <div className="panel">
@@ -57,12 +74,13 @@ function Todo() {
       <Input onAdd={handleAdd} />
       <Filter onChange={handleFilterChange} value={filter} />
       <div className="panel-block">
-        <button onClick={isAsc}>昇順</button>
-        <button onClick={isDesc}>降順</button>
-        <button onClick={isReset}>入力順</button>
+        <button onClick={onClickSortByAlphabet}>昇順</button>
+        <button onClick={onClickSortByAlphabetNone}>降順</button>
+        <button onClick={onClickSortByCreation}>入力昇順</button>
+        <button onClick={onClickSortByCreationNone}>入力降順</button>
         <div className="is-block">
-          <input type="checkbox" onChange={() => setVisible(!visible)} />
-          <span>非表示</span>
+          <label>完了済みタスクを非表示にする</label>
+          <input type="checkbox" onChange={handleChecked} />
         </div>
       </div>
       <div>
