@@ -13,7 +13,7 @@ function TodoItem({ item, onCheck }) {
           "has-text-grey-light ": item.done,
         })}
       >
-        {item.text}
+        {item.text} - {item.createdAt.toLocaleString()}
       </span>
     </label>
   );

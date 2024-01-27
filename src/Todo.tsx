@@ -91,7 +91,7 @@ function Todo() {
 
   return (
     <div className="panel">
-      <div className="panel-heading">React TODO</div>
+      <div className="panel-heading">React TODO HOGEHOGE</div>
       <Input onAdd={handleAdd} />
       <Filter onChange={handleFilterChange} value={filter} />
       <SortButtons
@@ -106,7 +106,7 @@ function Todo() {
           <TodoItem key={item.key} item={item} onCheck={handleCheck} />
         ))}
       </div>
-      <div className="panel-block">{displayItems.length} items</div>
+      <div className="panel-block">{displayItems.length} items displayed</div>
     </div>
   );
 }
